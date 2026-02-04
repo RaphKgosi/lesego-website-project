@@ -4,135 +4,118 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
-    <title>Lesego Makgoba Content Studio</title>
+    <title>Lesego Website Admin</title>
     <style>
         body {
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Helvetica, Arial, system-ui, sans-serif;
-            background-color: #1a1a1a;
-            height: 100vh;
         }
 
-        #app {
-            height: 100%;
+        #sanity {
+            position: fixed;
+            inset: 0;
         }
     </style>
 </head>
 
 <body>
-    <div id="app"></div>
     <div id="sanity"></div>
+    <noscript>Please enable JavaScript to use the Admin Panel</noscript>
+
+    <!-- Sanity Studio V3 Embedded Script -->
+    <script src="https://unpkg.com/sanity@3/dist/index.browser.js"></script>
+
     <script type="module">
-        // Import Sanity Studio dependencies from esm.sh
-        import { renderStudio, defineConfig } from 'https://esm.sh/sanity@5.7.0'
-        import { structureTool } from 'https://esm.sh/sanity@5.7.0/structure'
-        import { visionTool } from 'https://esm.sh/@sanity/vision@5.7.0'
-        import styled from 'https://esm.sh/styled-components@6.3.8'
-
-        // Define our schema directly here since importing from ../sanity_schema.js might fail 
-        // if not served with correct MIME types or CORS headers on some local setups.
-        // But we'll try to keep it DRY if possible. 
-        // For robustness in this "no-build" setup, I will re-declare it here 
-        // or duplicate the object to avoid module loading issues on simple file:// protocols or strict servers.
-        // Given the user constraint, I will copy the schema structure here.
-
-        const post = {
-            name: 'post',
-            title: 'Post',
-            type: 'document',
-            fields: [
-                {
-                    name: 'title',
-                    title: 'Title',
-                    type: 'string',
-                },
-                {
-                    name: 'slug',
-                    title: 'Slug',
-                    type: 'slug',
-                    options: {
-                        source: 'title',
-                        maxLength: 96,
-                    },
-                },
-                {
-                    name: 'publishedAt',
-                    title: 'Published at',
-                    type: 'datetime',
-                },
-                {
-                    name: 'category',
-                    title: 'Category',
-                    type: 'string',
-                    initialValue: 'Journal'
-                },
-                {
-                    name: 'mainImage',
-                    title: 'Main image',
-                    type: 'image',
-                    options: {
-                        hotspot: true,
-                    },
-                },
-                {
-                    name: 'excerpt',
-                    title: 'Excerpt',
-                    type: 'text',
-                    description: 'Short summary for the blog card',
-                },
-                {
-                    name: 'body',
-                    title: 'Body',
-                    type: 'array',
-                    of: [
-                        {
-                            title: 'Block',
-                            type: 'block',
-                            styles: [
-                                { title: 'Normal', value: 'normal' },
-                                { title: 'H1', value: 'h1' },
-                                { title: 'H2', value: 'h2' },
-                                { title: 'H3', value: 'h3' },
-                                { title: 'Quote', value: 'blockquote' },
-                            ],
-                            lists: [{ title: 'Bullet', value: 'bullet' }],
-                            marks: {
-                                decorators: [
-                                    { title: 'Strong', value: 'strong' },
-                                    { title: 'Emphasis', value: 'em' },
-                                ],
-                            },
-                        },
-                        {
-                            type: 'image',
-                            options: { hotspot: true },
-                        },
-                    ],
-                },
-            ],
-        }
+        // Using the global Sanity object provided by the script above
+        const { renderStudio, defineConfig } = window.Sanity;
 
         const config = defineConfig({
             projectId: 'bbafqmmq',
             dataset: 'production',
             title: 'Lesego Website',
             basePath: '/admin',
-            plugins: [
-                structureTool(),
-                visionTool(),
-            ],
             schema: {
-                types: [post],
-            },
-        })
+                types: [
+                    {
+                        name: 'post',
+                        title: 'Post',
+                        type: 'document',
+                        fields: [
+                            {
+                                name: 'title',
+                                title: 'Title',
+                                type: 'string',
+                            },
+                            {
+                                name: 'slug',
+                                title: 'Slug',
+                                type: 'slug',
+                                options: {
+                                    source: 'title',
+                                    maxLength: 96,
+                                },
+                            },
+                            {
+                                name: 'publishedAt',
+                                title: 'Published at',
+                                type: 'datetime',
+                            },
+                            {
+                                name: 'category',
+                                title: 'Category',
+                                type: 'string',
+                                initialValue: 'Journal'
+                            },
+                            {
+                                name: 'mainImage',
+                                title: 'Main image',
+                                type: 'image',
+                                options: {
+                                    hotspot: true,
+                                },
+                            },
+                            {
+                                name: 'excerpt',
+                                title: 'Excerpt',
+                                type: 'text',
+                                description: 'Short summary for the blog card',
+                            },
+                            {
+                                name: 'body',
+                                title: 'Body',
+                                type: 'array',
+                                of: [
+                                    {
+                                        title: 'Block',
+                                        type: 'block',
+                                        styles: [
+                                            { title: 'Normal', value: 'normal' },
+                                            { title: 'H1', value: 'h1' },
+                                            { title: 'H2', value: 'h2' },
+                                            { title: 'H3', value: 'h3' },
+                                            { title: 'Quote', value: 'blockquote' },
+                                        ],
+                                        lists: [{ title: 'Bullet', value: 'bullet' }],
+                                        marks: {
+                                            decorators: [
+                                                { title: 'Strong', value: 'strong' },
+                                                { title: 'Emphasis', value: 'em' },
+                                            ],
+                                        },
+                                    },
+                                    {
+                                        type: 'image',
+                                        options: { hotspot: true },
+                                    },
+                                ],
+                            },
+                        ],
+                    }
+                ]
+            }
+        });
 
-        const mountPoint = document.getElementById('app') || document.getElementById('sanity');
-        if (mountPoint) {
-            renderStudio(mountPoint, config);
-        } else {
-            console.error('Sanity Studio mount point not found (checked #app and #sanity)');
-        }
+        renderStudio(document.getElementById('sanity'), config);
     </script>
 </body>
 
