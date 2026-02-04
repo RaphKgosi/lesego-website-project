@@ -22,11 +22,13 @@
 
 <body>
     <div id="app"></div>
+    <div id="sanity"></div>
     <script type="module">
         // Import Sanity Studio dependencies from esm.sh
-        import { renderStudio, defineConfig } from 'https://esm.sh/sanity@3.20.0'
-        import { deskTool } from 'https://esm.sh/sanity@3.20.0/desk'
-        import { visionTool } from 'https://esm.sh/@sanity/vision@3.20.0'
+        import { renderStudio, defineConfig } from 'https://esm.sh/sanity@5.7.0'
+        import { structureTool } from 'https://esm.sh/sanity@5.7.0/structure'
+        import { visionTool } from 'https://esm.sh/@sanity/vision@5.7.0'
+        import styled from 'https://esm.sh/styled-components@6.3.8'
 
         // Define our schema directly here since importing from ../sanity_schema.js might fail 
         // if not served with correct MIME types or CORS headers on some local setups.
@@ -117,7 +119,7 @@
             title: 'Lesego Website',
             basePath: '/admin',
             plugins: [
-                deskTool(),
+                structureTool(),
                 visionTool(),
             ],
             schema: {
@@ -125,7 +127,12 @@
             },
         })
 
-        renderStudio(document.getElementById('app'), config)
+        const mountPoint = document.getElementById('app') || document.getElementById('sanity');
+        if (mountPoint) {
+            renderStudio(mountPoint, config);
+        } else {
+            console.error('Sanity Studio mount point not found (checked #app and #sanity)');
+        }
     </script>
 </body>
 
