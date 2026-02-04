@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <div class="column xl-12">
                         <figure class="featured-image">
                             <!-- Image path fixed by builder, so we use it directly -->
-                            <img src="${post.image}" alt="${post.title}">
+                            <img src="${post.image}" alt="${post.title}" class="img-fluid">
                         </figure>
                     </div>
                 </div>

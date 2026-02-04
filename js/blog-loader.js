@@ -25,36 +25,33 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // Render posts
         container.innerHTML = data.map(post => {
-            // Formatting the date for display (optional, but good for UI)
-            const dateStr = post.date ? new Date(post.date).toLocaleDateString() : '';
+            // Formatting the date for display
+            const dateStr = post.date ? new Date(post.date).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+            }) : '';
 
-            // Constructing the slug URL. 
-            // Note: In a real static generator, "post.slug" might need to map to a generated HTML file.
-            // If the user hasn't generated individual HTML pages for posts, this link might 404.
-            // We'll trust the user's "Read More" request implies pages exist or will exist.
-            const datePrefix = post.date ? post.date.split('T')[0] + '-' : ''; // Based on Decap slug config "{{year}}-{{month}}-{{day}}-{{slug}}"
-            // Actually, if the slug in JSON is just the slug part, we might need to construct the path. 
-            // But Decap usually saves the full slug property if configured.
-            // Let's assume post.slug is the relative path or we just use it. 
-            // The user requested href="/journal/{post.slug}"
             // Debugging link generation
             console.log('Generated Link for:', post.title, 'Slug:', post.slug);
 
             return `
             <div class="grid-list-items__item blog-card">
-                <div class="blog-card__header">
-                    <div class="blog-card__cat-links">
-                        <a href="#">${dateStr}</a>
-                    </div>
-                    <h3 class="blog-card__title">
-                        <a href="journal-post.html?slug=${post.slug}">${post.title || 'Untitled'}</a>
-                    </h3>
-                </div>
-                <div class="blog-card__text">
-                    <p>
-                        ${post.description || ''}
-                    </p>
-                </div>
+                 <img src="${post.image}" alt="${post.title}">
+                 <div class="blog-card__cat-links">
+                     <a href="journal.html">Journal</a>
+                 </div>
+                 <div class="blog-card__header">
+                     <h3 class="blog-card__title"><a href="journal-post.html?slug=${post.slug}">${post.title || 'Untitled'}</a></h3>
+                 </div>
+                 <div class="blog-card__text">
+                     <p>
+                         ${post.description || ''}
+                     </p>
+                     <div class="blog-card__meta">
+                         <span class="blog-card__date">${dateStr}</span>
+                     </div>
+                 </div>
             </div>
             `;
         }).join('');
