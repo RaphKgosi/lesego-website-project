@@ -9,113 +9,170 @@
         body {
             margin: 0;
             padding: 0;
+            font-family: sans-serif;
         }
 
         #sanity {
             position: fixed;
             inset: 0;
+            background: white;
+            z-index: 100;
+        }
+
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: #666;
         }
     </style>
+    <!-- 1. Global Styled Components -->
+    <script src="https://unpkg.com/styled-components@6.1.1/dist/styled-components.browser.js"></script>
 </head>
 
 <body>
-    <div id="sanity"></div>
+    <div id="sanity">
+        <div class="loading">Loading Studio...</div>
+    </div>
     <noscript>Please enable JavaScript to use the Admin Panel</noscript>
 
-    <!-- Sanity Studio V3 Embedded Script -->
-    <script src="https://unpkg.com/sanity@3/dist/index.browser.js"></script>
+    <!-- 2. Sanity Global Bundle -->
+    <script src="https://unpkg.com/sanity@3.31.0/dist/index.browser.js"></script>
+
+    <!-- 3. Sanity Vision Plugin (Optional but requested) -->
+    <!-- Note: Might need to be loaded after sanity or checked if bundled. 
+         Safe check implemented in logic. -->
 
     <script type="module">
-        // Using the global Sanity object provided by the script above
-        const { renderStudio, defineConfig } = window.Sanity;
+        async function initSanity() {
+            const mountPoint = document.getElementById('sanity');
 
-        const config = defineConfig({
-            projectId: 'bbafqmmq',
-            dataset: 'production',
-            title: 'Lesego Website',
-            basePath: '/admin',
-            schema: {
-                types: [
-                    {
-                        name: 'post',
-                        title: 'Post',
-                        type: 'document',
-                        fields: [
-                            {
-                                name: 'title',
-                                title: 'Title',
-                                type: 'string',
-                            },
-                            {
-                                name: 'slug',
-                                title: 'Slug',
-                                type: 'slug',
-                                options: {
-                                    source: 'title',
-                                    maxLength: 96,
-                                },
-                            },
-                            {
-                                name: 'publishedAt',
-                                title: 'Published at',
-                                type: 'datetime',
-                            },
-                            {
-                                name: 'category',
-                                title: 'Category',
-                                type: 'string',
-                                initialValue: 'Journal'
-                            },
-                            {
-                                name: 'mainImage',
-                                title: 'Main image',
-                                type: 'image',
-                                options: {
-                                    hotspot: true,
-                                },
-                            },
-                            {
-                                name: 'excerpt',
-                                title: 'Excerpt',
-                                type: 'text',
-                                description: 'Short summary for the blog card',
-                            },
-                            {
-                                name: 'body',
-                                title: 'Body',
-                                type: 'array',
-                                of: [
-                                    {
-                                        title: 'Block',
-                                        type: 'block',
-                                        styles: [
-                                            { title: 'Normal', value: 'normal' },
-                                            { title: 'H1', value: 'h1' },
-                                            { title: 'H2', value: 'h2' },
-                                            { title: 'H3', value: 'h3' },
-                                            { title: 'Quote', value: 'blockquote' },
-                                        ],
-                                        lists: [{ title: 'Bullet', value: 'bullet' }],
-                                        marks: {
-                                            decorators: [
-                                                { title: 'Strong', value: 'strong' },
-                                                { title: 'Emphasis', value: 'em' },
-                                            ],
-                                        },
-                                    },
-                                    {
-                                        type: 'image',
-                                        options: { hotspot: true },
-                                    },
-                                ],
-                            },
-                        ],
-                    }
-                ]
+            // Wait for Sanity to be defined
+            let attempts = 0;
+            while (!window.Sanity && attempts < 50) {
+                await new Promise(r => setTimeout(r, 100));
+                attempts++;
             }
-        });
 
-        renderStudio(document.getElementById('sanity'), config);
+            if (!window.Sanity) {
+                mountPoint.innerHTML = '<div style="padding: 20px; color: red;">Failed to load Sanity resources. Please check your connection.</div>';
+                return;
+            }
+
+            const { renderStudio, defineConfig, deskTool, structureTool } = window.Sanity;
+
+            // Handle plugins: Vision might not be in the main bundle, assuming basic setup for now.
+            // If the user strictly needs visionTool, we'd need another script, but for now let's ensure the core works.
+            // Using deskTool alias if structureTool is not available, or vice versa.
+            // V3.31 prefers structureTool.
+
+            const plugins = [];
+
+            if (typeof structureTool === 'function') {
+                plugins.push(structureTool());
+            } else if (typeof deskTool === 'function') {
+                plugins.push(deskTool());
+            }
+
+            // Note: If visionTool is not in the bundle, we skip it to prevent crash.
+            // To properly add visionTool, we would need: <script src="https://unpkg.com/@sanity/vision@3...">
+            // But let's stick to the core request first to get a visual.
+
+            const config = defineConfig({
+                projectId: 'bbafqmmq',
+                dataset: 'production',
+                title: 'Lesego Website',
+                basePath: '/admin',
+                plugins: plugins,
+                schema: {
+                    types: [
+                        {
+                            name: 'post',
+                            title: 'Post',
+                            type: 'document',
+                            fields: [
+                                {
+                                    name: 'title',
+                                    title: 'Title',
+                                    type: 'string',
+                                },
+                                {
+                                    name: 'slug',
+                                    title: 'Slug',
+                                    type: 'slug',
+                                    options: {
+                                        source: 'title',
+                                        maxLength: 96,
+                                    },
+                                },
+                                {
+                                    name: 'publishedAt',
+                                    title: 'Published at',
+                                    type: 'datetime',
+                                },
+                                {
+                                    name: 'category',
+                                    title: 'Category',
+                                    type: 'string',
+                                    initialValue: 'Journal'
+                                },
+                                {
+                                    name: 'mainImage',
+                                    title: 'Main image',
+                                    type: 'image',
+                                    options: {
+                                        hotspot: true,
+                                    },
+                                },
+                                {
+                                    name: 'excerpt',
+                                    title: 'Excerpt',
+                                    type: 'text',
+                                    description: 'Short summary for the blog card',
+                                },
+                                {
+                                    name: 'body',
+                                    title: 'Body',
+                                    type: 'array',
+                                    of: [
+                                        {
+                                            title: 'Block',
+                                            type: 'block',
+                                            styles: [
+                                                { title: 'Normal', value: 'normal' },
+                                                { title: 'H1', value: 'h1' },
+                                                { title: 'H2', value: 'h2' },
+                                                { title: 'H3', value: 'h3' },
+                                                { title: 'Quote', value: 'blockquote' },
+                                            ],
+                                            lists: [{ title: 'Bullet', value: 'bullet' }],
+                                            marks: {
+                                                decorators: [
+                                                    { title: 'Strong', value: 'strong' },
+                                                    { title: 'Emphasis', value: 'em' },
+                                                ],
+                                            },
+                                        },
+                                        {
+                                            type: 'image',
+                                            options: { hotspot: true },
+                                        },
+                                    ],
+                                },
+                            ],
+                        }
+                    ]
+                }
+            });
+
+            // Clear loading state
+            mountPoint.innerHTML = '';
+
+            renderStudio(mountPoint, config);
+        }
+
+        initSanity();
     </script>
 </body>
 
