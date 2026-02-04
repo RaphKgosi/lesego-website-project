@@ -10,6 +10,7 @@
             margin: 0;
             padding: 0;
             font-family: sans-serif;
+            background-color: #f0f0f0;
         }
 
         #sanity {
@@ -18,186 +19,129 @@
             background: white;
             z-index: 100;
         }
-
-        .loading {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            color: #666;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        #status {
-            font-size: 12px;
-            color: #999;
-        }
     </style>
-    <!-- 1. Global Styled Components -->
-    <script src="https://unpkg.com/styled-components@6.1.1/dist/styled-components.browser.js"></script>
-    <!-- 2. Sanity Global Bundle -->
-    <script src="https://unpkg.com/sanity@3.31.0/dist/index.browser.js"></script>
+    <!-- Polyfill for process.env (Required by many React/Sanity libraries) -->
+    <script>
+        window.process = {
+            env: {
+                NODE_ENV: 'production'
+            }
+        };
+    </script>
 </head>
 
 <body>
-    <div id="sanity">
-        <div class="loading">
-            <div>Loading Studio...</div>
-            <div id="status">Initializing...</div>
-        </div>
-    </div>
+    <div id="sanity"></div>
     <noscript>Please enable JavaScript to use the Admin Panel</noscript>
 
     <script type="module">
-        const statusEl = document.getElementById('status');
+        // Import Sanity Studio dependencies from esm.sh
+        // using specific versions to ensure compatibility
+        import { renderStudio, defineConfig } from 'https://esm.sh/sanity@3.31.0'
+        import { deskTool } from 'https://esm.sh/sanity@3.31.0/desk'
+        import { visionTool } from 'https://esm.sh/@sanity/vision@3.31.0'
 
-        function updateStatus(msg) {
-            if (statusEl) statusEl.textContent = msg;
-            console.log(msg);
-        }
+        console.log('Sanity Modules Loaded');
 
-        async function waitForSanity() {
-            let attempts = 0;
-            const maxAttempts = 100; // ~5 seconds
-
-            while (typeof window.Sanity === 'undefined' && attempts < maxAttempts) {
-                if (attempts % 10 === 0) { // Log every 10th attempt (every 500ms)
-                    updateStatus(`Waiting for Sanity resources... (${attempts})`);
-                }
-                await new Promise(resolve => setTimeout(resolve, 50));
-                attempts++;
-            }
-
-            if (typeof window.Sanity === 'undefined') {
-                updateStatus('Failed: Sanity Global not found after timeout. Please refresh.');
-                console.error('Sanity Global not found');
-                return null;
-            }
-
-            updateStatus('Sanity resources loaded. Starting Studio...');
-            return window.Sanity;
-        }
-
-        async function init() {
-            const Sanity = await waitForSanity();
-
-            if (!Sanity) return;
-
-            const { renderStudio, defineConfig, deskTool, structureTool, visionTool } = Sanity;
-
-            const plugins = [];
-            // Prefer structureTool for v3, fallback to deskTool if needed
-            if (typeof structureTool === 'function') {
-                plugins.push(structureTool());
-            } else if (typeof deskTool === 'function') {
-                plugins.push(deskTool());
-            }
-
-            if (typeof visionTool === 'function') {
-                plugins.push(visionTool());
-            }
-
-            const config = defineConfig({
-                projectId: 'bbafqmmq',
-                dataset: 'production',
-                title: 'Lesego Website',
-                // basePath removed
-                useCdn: false,
-                plugins: plugins,
-                schema: {
-                    types: [
-                        {
-                            name: 'post',
-                            title: 'Post',
-                            type: 'document',
-                            fields: [
-                                {
-                                    name: 'title',
-                                    title: 'Title',
-                                    type: 'string',
+        const config = defineConfig({
+            projectId: 'bbafqmmq',
+            dataset: 'production',
+            title: 'Lesego Website',
+            // No basePath as requested to avoid loop issues on static hosts
+            useCdn: false,
+            plugins: [
+                deskTool(),
+                visionTool()
+            ],
+            schema: {
+                types: [
+                    {
+                        name: 'post',
+                        title: 'Post',
+                        type: 'document',
+                        fields: [
+                            {
+                                name: 'title',
+                                title: 'Title',
+                                type: 'string',
+                            },
+                            {
+                                name: 'slug',
+                                title: 'Slug',
+                                type: 'slug',
+                                options: {
+                                    source: 'title',
+                                    maxLength: 96,
                                 },
-                                {
-                                    name: 'slug',
-                                    title: 'Slug',
-                                    type: 'slug',
-                                    options: {
-                                        source: 'title',
-                                        maxLength: 96,
-                                    },
+                            },
+                            {
+                                name: 'publishedAt',
+                                title: 'Published at',
+                                type: 'datetime',
+                            },
+                            {
+                                name: 'category',
+                                title: 'Category',
+                                type: 'string',
+                                initialValue: 'Journal'
+                            },
+                            {
+                                name: 'mainImage',
+                                title: 'Main image',
+                                type: 'image',
+                                options: {
+                                    hotspot: true,
                                 },
-                                {
-                                    name: 'publishedAt',
-                                    title: 'Published at',
-                                    type: 'datetime',
-                                },
-                                {
-                                    name: 'category',
-                                    title: 'Category',
-                                    type: 'string',
-                                    initialValue: 'Journal'
-                                },
-                                {
-                                    name: 'mainImage',
-                                    title: 'Main image',
-                                    type: 'image',
-                                    options: {
-                                        hotspot: true,
-                                    },
-                                },
-                                {
-                                    name: 'excerpt',
-                                    title: 'Excerpt',
-                                    type: 'text',
-                                    description: 'Short summary for the blog card',
-                                },
-                                {
-                                    name: 'body',
-                                    title: 'Body',
-                                    type: 'array',
-                                    of: [
-                                        {
-                                            title: 'Block',
-                                            type: 'block',
-                                            styles: [
-                                                { title: 'Normal', value: 'normal' },
-                                                { title: 'H1', value: 'h1' },
-                                                { title: 'H2', value: 'h2' },
-                                                { title: 'H3', value: 'h3' },
-                                                { title: 'Quote', value: 'blockquote' },
+                            },
+                            {
+                                name: 'excerpt',
+                                title: 'Excerpt',
+                                type: 'text',
+                                description: 'Short summary for the blog card',
+                            },
+                            {
+                                name: 'body',
+                                title: 'Body',
+                                type: 'array',
+                                of: [
+                                    {
+                                        title: 'Block',
+                                        type: 'block',
+                                        styles: [
+                                            { title: 'Normal', value: 'normal' },
+                                            { title: 'H1', value: 'h1' },
+                                            { title: 'H2', value: 'h2' },
+                                            { title: 'H3', value: 'h3' },
+                                            { title: 'Quote', value: 'blockquote' },
+                                        ],
+                                        lists: [{ title: 'Bullet', value: 'bullet' }],
+                                        marks: {
+                                            decorators: [
+                                                { title: 'Strong', value: 'strong' },
+                                                { title: 'Emphasis', value: 'em' },
                                             ],
-                                            lists: [{ title: 'Bullet', value: 'bullet' }],
-                                            marks: {
-                                                decorators: [
-                                                    { title: 'Strong', value: 'strong' },
-                                                    { title: 'Emphasis', value: 'em' },
-                                                ],
-                                            },
                                         },
-                                        {
-                                            type: 'image',
-                                            options: { hotspot: true },
-                                        },
-                                    ],
-                                },
-                            ],
-                        }
-                    ]
-                }
-            });
+                                    },
+                                    {
+                                        type: 'image',
+                                        options: { hotspot: true },
+                                    },
+                                ],
+                            },
+                        ],
+                    }
+                ]
+            }
+        });
 
-            const mountPoint = document.getElementById('sanity');
-            // Clear loading UI before rendering
-            mountPoint.innerHTML = '';
+        const mountPoint = document.getElementById('sanity');
 
+        if (mountPoint) {
             renderStudio(mountPoint, config);
             console.log('Studio Rendered');
+        } else {
+            console.error('Mount point #sanity not found');
         }
-
-        init().catch(err => {
-            console.error('Initialization error:', err);
-            updateStatus('Error: ' + err.message);
-        });
     </script>
 </body>
 
