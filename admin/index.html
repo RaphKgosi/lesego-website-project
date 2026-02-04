@@ -18,6 +18,21 @@
             background: white;
             z-index: 100;
         }
+
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: #666;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        #status {
+            font-size: 12px;
+            color: #999;
+        }
     </style>
     <!-- 1. Global Styled Components -->
     <script src="https://unpkg.com/styled-components@6.1.1/dist/styled-components.browser.js"></script>
@@ -26,24 +41,50 @@
 </head>
 
 <body>
-    <div id="sanity"></div>
+    <div id="sanity">
+        <div class="loading">
+            <div>Loading Studio...</div>
+            <div id="status">Initializing...</div>
+        </div>
+    </div>
     <noscript>Please enable JavaScript to use the Admin Panel</noscript>
 
     <script type="module">
-        console.log('Sanity Global:', window.Sanity);
+        const statusEl = document.getElementById('status');
 
-        // Wait for sanity to load if not already ready (though script tags above are synchronous blocking)
-        // We add a small safety check or just run directly since they are plain scripts.
+        function updateStatus(msg) {
+            if (statusEl) statusEl.textContent = msg;
+            console.log(msg);
+        }
 
-        async function run() {
-            console.log('Studio Initializing...');
+        async function waitForSanity() {
+            let attempts = 0;
+            const maxAttempts = 100; // ~5 seconds
 
-            if (!window.Sanity) {
-                console.error('Sanity Not Found');
-                return;
+            while (typeof window.Sanity === 'undefined' && attempts < maxAttempts) {
+                if (attempts % 10 === 0) { // Log every 10th attempt (every 500ms)
+                    updateStatus(`Waiting for Sanity resources... (${attempts})`);
+                }
+                await new Promise(resolve => setTimeout(resolve, 50));
+                attempts++;
             }
 
-            const { renderStudio, defineConfig, deskTool, structureTool, visionTool } = window.Sanity;
+            if (typeof window.Sanity === 'undefined') {
+                updateStatus('Failed: Sanity Global not found after timeout. Please refresh.');
+                console.error('Sanity Global not found');
+                return null;
+            }
+
+            updateStatus('Sanity resources loaded. Starting Studio...');
+            return window.Sanity;
+        }
+
+        async function init() {
+            const Sanity = await waitForSanity();
+
+            if (!Sanity) return;
+
+            const { renderStudio, defineConfig, deskTool, structureTool, visionTool } = Sanity;
 
             const plugins = [];
             // Prefer structureTool for v3, fallback to deskTool if needed
@@ -61,7 +102,7 @@
                 projectId: 'bbafqmmq',
                 dataset: 'production',
                 title: 'Lesego Website',
-                // basePath removed as requested to avoid infinite loops in some static environments
+                // basePath removed
                 useCdn: false,
                 plugins: plugins,
                 schema: {
@@ -146,11 +187,17 @@
             });
 
             const mountPoint = document.getElementById('sanity');
+            // Clear loading UI before rendering
+            mountPoint.innerHTML = '';
+
             renderStudio(mountPoint, config);
             console.log('Studio Rendered');
         }
 
-        run();
+        init().catch(err => {
+            console.error('Initialization error:', err);
+            updateStatus('Error: ' + err.message);
+        });
     </script>
 </body>
 
