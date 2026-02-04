@@ -53,15 +53,35 @@ document.addEventListener('DOMContentLoaded', async () => {
             day: 'numeric'
         }) : '';
 
-        // Render HTML - Text Only
+        // Render HTML - Standard Structure (Text Only)
         container.innerHTML = `
-            <div style="margin-bottom: 2rem;">
-                <h1 style="margin-bottom: 0.5rem; line-height: 1.2;">${post.title}</h1>
-                <p style="color: #666; font-style: italic; margin-bottom: 2rem;">${dateStr}</p>
+            <!-- Header -->
+            <div class="s-pageheader entry__header">
+                <div class="row">
+                    <div class="column xl-12">
+                        <h1 class="entry__title">
+                            ${post.title}
+                        </h1>
+                        <div class="entry__meta">
+                            <div class="entry__meta-date">
+                                <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <circle cx="12" cy="12" r="7.25" stroke="currentColor" stroke-width="1.5"></circle>
+                                    <path stroke="currentColor" stroke-width="1.5" d="M12 8V12L14 14"></path>
+                                </svg>
+                                ${dateStr}
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div class="post-content">
-                ${marked.parse(post.body || '')}
+            <!-- Content (No Image) -->
+            <div class="s-pagecontent entry__content">
+                <div class="row entry__primary width-narrower">
+                    <div class="column xl-12">
+                        ${marked.parse(post.body || '')}
+                    </div>
+                </div>
             </div>
         `;
 
