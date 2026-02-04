@@ -37,6 +37,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             // But Decap usually saves the full slug property if configured.
             // Let's assume post.slug is the relative path or we just use it. 
             // The user requested href="/journal/{post.slug}"
+            // Debugging link generation
+            console.log('Generated Link for:', post.title, 'Slug:', post.slug);
 
             return `
             <div class="grid-list-items__item blog-card">
@@ -45,7 +47,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                         <a href="#">${dateStr}</a>
                     </div>
                     <h3 class="blog-card__title">
-                        <a href="journal-post.html?slug=${post.slug || '#'}">${post.title || 'Untitled'}</a>
+                        <a href="journal-post.html?slug=${post.slug}">${post.title || 'Untitled'}</a>
                     </h3>
                 </div>
                 <div class="blog-card__text">

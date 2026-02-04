@@ -27,8 +27,16 @@ fs.readdir(contentDir, (err, files) => {
             const rawData = fs.readFileSync(path.join(contentDir, file));
             try {
                 const post = JSON.parse(rawData);
-                // Add filename or slug if not present (Decap CMS sets slug in data if configured, but filename is useful)
-                // We'll rely on the data 'date' for sorting
+                // Add filename or slug if not present
+                if (!post.slug) {
+                    post.slug = path.basename(file, '.json');
+                }
+
+                // Ensure image path is absolute (starts with /) if it's not a URL
+                if (post.image && !post.image.startsWith('/') && !post.image.startsWith('http')) {
+                    post.image = '/' + post.image;
+                }
+
                 posts.push(post);
             } catch (e) {
                 console.error(`Error parsing ${file}:`, e);

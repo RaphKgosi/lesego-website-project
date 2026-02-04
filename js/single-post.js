@@ -14,6 +14,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
 
+    console.log('Current Slug:', slug);
+
     if (!slug) {
         container.innerHTML = `
             <div class="row">
@@ -33,6 +35,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const post = posts.find(p => p.slug === slug);
 
         if (!post) {
+            console.log('Post not found in loaded data. Available slugs:', posts.map(p => p.slug));
             container.innerHTML = `
             <div class="row">
                 <div class="column xl-12">
@@ -80,6 +83,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <div class="row entry__media">
                     <div class="column xl-12">
                         <figure class="featured-image">
+                            <!-- Image path fixed by builder, so we use it directly -->
                             <img src="${post.image}" alt="${post.title}">
                         </figure>
                     </div>
