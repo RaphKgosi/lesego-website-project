@@ -1,1 +1,18 @@
-[]
+[
+    {
+        "title": "Welcome to My New Journal",
+        "date": "2023-10-27T12:00:00.000Z",
+        "image": "images/thumbs/single/standard-1200.jpg",
+        "body": "## Hello World\n\nThis is my first dynamic blog post. It is fetched from a JSON file and rendered using JavaScript.\n\n### Why this matters\n\nStatic sites are fast, but sometimes we need dynamic content without a heavy backend. This solution uses **JSON** as a data source.\n\n- Light\n- Fast\n- Easy to maintain",
+        "description": "An introduction to the new dynamic blog system.",
+        "slug": "welcome-journal"
+    },
+    {
+        "title": "The Economist's Edge",
+        "date": "2023-10-20T10:00:00.000Z",
+        "image": "",
+        "body": "In the world of entrepreneurship, passion often gets the spotlight, but financial discipline is the unsung hero that guarantees longevity and scale...",
+        "description": "How financial discipline scales a brand nationally.",
+        "slug": "economists-edge"
+    }
+]

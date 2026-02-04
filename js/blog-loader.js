@@ -39,12 +39,21 @@ document.addEventListener('DOMContentLoaded', async () => {
             // The user requested href="/journal/{post.slug}"
 
             return `
-            <article class="journal-card">
-                <img src="${post.image || ''}" alt="${post.title || 'Journal Entry'}">
-                <h3>${post.title || 'Untitled'}</h3>
-                <p class="date">${dateStr}</p>
-                <a href="/journal/${post.slug || '#'}">Read More</a>
-            </article>
+            <div class="grid-list-items__item blog-card">
+                <div class="blog-card__header">
+                    <div class="blog-card__cat-links">
+                        <a href="#">${dateStr}</a>
+                    </div>
+                    <h3 class="blog-card__title">
+                        <a href="journal-post.html?slug=${post.slug || '#'}">${post.title || 'Untitled'}</a>
+                    </h3>
+                </div>
+                <div class="blog-card__text">
+                    <p>
+                        ${post.description || ''}
+                    </p>
+                </div>
+            </div>
             `;
         }).join('');
 
