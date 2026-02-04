@@ -18,49 +18,41 @@
             background: white;
             z-index: 100;
         }
-
-        .loading {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            color: #666;
-        }
     </style>
     <!-- 1. Global Styled Components -->
     <script src="https://unpkg.com/styled-components@6.1.1/dist/styled-components.browser.js"></script>
+    <!-- 2. Sanity Global Bundle -->
+    <script src="https://unpkg.com/sanity@3.31.0/dist/index.browser.js"></script>
 </head>
 
 <body>
-    <div id="sanity">
-        <div class="loading">Loading Studio...</div>
-    </div>
+    <div id="sanity"></div>
     <noscript>Please enable JavaScript to use the Admin Panel</noscript>
 
-    <!-- 2. Sanity Global Bundle loaded with onload handler -->
-    <script src="https://unpkg.com/sanity@3.31.0/dist/index.browser.js" onload="initSanity()"></script>
+    <script type="module">
+        console.log('Sanity Global:', window.Sanity);
 
-    <script>
-        function initSanity() {
-            const mountPoint = document.getElementById('sanity');
+        // Wait for sanity to load if not already ready (though script tags above are synchronous blocking)
+        // We add a small safety check or just run directly since they are plain scripts.
+
+        async function run() {
+            console.log('Studio Initializing...');
 
             if (!window.Sanity) {
-                mountPoint.innerHTML = '<div style="padding: 20px; color: red;">Error: Sanity global object not found.</div>';
+                console.error('Sanity Not Found');
                 return;
             }
 
-            // Destructure tools from window.Sanity
-            const { renderStudio, defineConfig, deskTool, visionTool } = window.Sanity;
+            const { renderStudio, defineConfig, deskTool, structureTool, visionTool } = window.Sanity;
 
-            // Plugins array
             const plugins = [];
-
-            // Add deskTool (or structureTool if preferred, but user asked for deskTool explicitly)
-            if (typeof deskTool === 'function') {
+            // Prefer structureTool for v3, fallback to deskTool if needed
+            if (typeof structureTool === 'function') {
+                plugins.push(structureTool());
+            } else if (typeof deskTool === 'function') {
                 plugins.push(deskTool());
             }
 
-            // Add visionTool if available
             if (typeof visionTool === 'function') {
                 plugins.push(visionTool());
             }
@@ -69,8 +61,8 @@
                 projectId: 'bbafqmmq',
                 dataset: 'production',
                 title: 'Lesego Website',
-                basePath: '/admin',
-                useCdn: false, // Explicitly requested
+                // basePath removed as requested to avoid infinite loops in some static environments
+                useCdn: false,
                 plugins: plugins,
                 schema: {
                     types: [
@@ -153,11 +145,12 @@
                 }
             });
 
-            // Clear loading state
-            mountPoint.innerHTML = '';
-
+            const mountPoint = document.getElementById('sanity');
             renderStudio(mountPoint, config);
+            console.log('Studio Rendered');
         }
+
+        run();
     </script>
 </body>
 
