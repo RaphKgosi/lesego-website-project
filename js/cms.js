@@ -1,6 +1,6 @@
 
 // Sanity Configuration
-const PROJECT_ID = 'njm9yfal';
+const PROJECT_ID = 'bbafqmmq';
 const DATASET = 'production';
 const API_VERSION = '2023-01-01'; // use current date or fixed version
 const CDN_URL = `https://${PROJECT_ID}.api.sanity.io/v${API_VERSION}/data/query/${DATASET}?query=`;
