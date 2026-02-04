@@ -37,53 +37,40 @@
     </div>
     <noscript>Please enable JavaScript to use the Admin Panel</noscript>
 
-    <!-- 2. Sanity Global Bundle -->
-    <script src="https://unpkg.com/sanity@3.31.0/dist/index.browser.js"></script>
+    <!-- 2. Sanity Global Bundle loaded with onload handler -->
+    <script src="https://unpkg.com/sanity@3.31.0/dist/index.browser.js" onload="initSanity()"></script>
 
-    <!-- 3. Sanity Vision Plugin (Optional but requested) -->
-    <!-- Note: Might need to be loaded after sanity or checked if bundled. 
-         Safe check implemented in logic. -->
-
-    <script type="module">
-        async function initSanity() {
+    <script>
+        function initSanity() {
             const mountPoint = document.getElementById('sanity');
 
-            // Wait for Sanity to be defined
-            let attempts = 0;
-            while (!window.Sanity && attempts < 50) {
-                await new Promise(r => setTimeout(r, 100));
-                attempts++;
-            }
-
             if (!window.Sanity) {
-                mountPoint.innerHTML = '<div style="padding: 20px; color: red;">Failed to load Sanity resources. Please check your connection.</div>';
+                mountPoint.innerHTML = '<div style="padding: 20px; color: red;">Error: Sanity global object not found.</div>';
                 return;
             }
 
-            const { renderStudio, defineConfig, deskTool, structureTool } = window.Sanity;
+            // Destructure tools from window.Sanity
+            const { renderStudio, defineConfig, deskTool, visionTool } = window.Sanity;
 
-            // Handle plugins: Vision might not be in the main bundle, assuming basic setup for now.
-            // If the user strictly needs visionTool, we'd need another script, but for now let's ensure the core works.
-            // Using deskTool alias if structureTool is not available, or vice versa.
-            // V3.31 prefers structureTool.
-
+            // Plugins array
             const plugins = [];
 
-            if (typeof structureTool === 'function') {
-                plugins.push(structureTool());
-            } else if (typeof deskTool === 'function') {
+            // Add deskTool (or structureTool if preferred, but user asked for deskTool explicitly)
+            if (typeof deskTool === 'function') {
                 plugins.push(deskTool());
             }
 
-            // Note: If visionTool is not in the bundle, we skip it to prevent crash.
-            // To properly add visionTool, we would need: <script src="https://unpkg.com/@sanity/vision@3...">
-            // But let's stick to the core request first to get a visual.
+            // Add visionTool if available
+            if (typeof visionTool === 'function') {
+                plugins.push(visionTool());
+            }
 
             const config = defineConfig({
                 projectId: 'bbafqmmq',
                 dataset: 'production',
                 title: 'Lesego Website',
                 basePath: '/admin',
+                useCdn: false, // Explicitly requested
                 plugins: plugins,
                 schema: {
                     types: [
@@ -171,8 +158,6 @@
 
             renderStudio(mountPoint, config);
         }
-
-        initSanity();
     </script>
 </body>
 
