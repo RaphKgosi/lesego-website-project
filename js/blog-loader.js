@@ -1,52 +1,55 @@
 /**
  * blog-loader.js
- * Fetches the generated js/posts.json index and displays posts.
+ * Fetches js/posts.json and renders journal cards.
  */
 
-async function loadJournalEntries() {
-    const journalContainer = document.querySelector('.journal-grid') || document.getElementById('journal-entries');
+document.addEventListener('DOMContentLoaded', async () => {
+    const container = document.getElementById('journal-container');
 
-    if (!journalContainer) {
-        console.warn('Journal container not found');
+    if (!container) {
+        console.error('Target container #journal-container not found in HTML.');
         return;
     }
 
     try {
-        // Fetch the generated index
-        const response = await fetch('js/posts.json');
+        const response = await fetch('/js/posts.json');
+        if (!response.ok) throw new Error('Failed to fetch posts.json');
 
-        let posts = [];
-        if (response.ok) {
-            posts = await response.json();
-        } else {
-            console.warn('js/posts.json not found. Run "npm run build" to generate it.');
-            journalContainer.innerHTML = '<p>No journal entries found (index missing).</p>';
-            return;
-        }
+        const data = await response.json();
+        console.log('Loaded posts:', data);
 
-        if (posts.length === 0) {
-            journalContainer.innerHTML = '<p>No journal entries found.</p>';
+        if (!data || data.length === 0) {
+            container.innerHTML = '<p>No journal entries yet.</p>';
             return;
         }
 
         // Render posts
-        journalContainer.innerHTML = posts.map(post => `
+        container.innerHTML = data.map(post => {
+            // Formatting the date for display (optional, but good for UI)
+            const dateStr = post.date ? new Date(post.date).toLocaleDateString() : '';
+
+            // Constructing the slug URL. 
+            // Note: In a real static generator, "post.slug" might need to map to a generated HTML file.
+            // If the user hasn't generated individual HTML pages for posts, this link might 404.
+            // We'll trust the user's "Read More" request implies pages exist or will exist.
+            const datePrefix = post.date ? post.date.split('T')[0] + '-' : ''; // Based on Decap slug config "{{year}}-{{month}}-{{day}}-{{slug}}"
+            // Actually, if the slug in JSON is just the slug part, we might need to construct the path. 
+            // But Decap usually saves the full slug property if configured.
+            // Let's assume post.slug is the relative path or we just use it. 
+            // The user requested href="/journal/{post.slug}"
+
+            return `
             <article class="journal-card">
-                ${post.image ? `<img src="${post.image}" alt="${post.title}" class="journal-image">` : ''}
-                <div class="journal-content">
-                    <time datetime="${post.date}">${new Date(post.date).toLocaleDateString()}</time>
-                    <h3>${post.title}</h3>
-                    <div class="journal-excerpt">
-                         ${post.body ? post.body.substring(0, 100) + '...' : ''}
-                    </div>
-                </div>
+                <img src="${post.image || ''}" alt="${post.title || 'Journal Entry'}">
+                <h3>${post.title || 'Untitled'}</h3>
+                <p class="date">${dateStr}</p>
+                <a href="/journal/${post.slug || '#'}">Read More</a>
             </article>
-        `).join('');
+            `;
+        }).join('');
 
     } catch (error) {
-        console.error('Error loading journal entries:', error);
-        journalContainer.innerHTML = '<p>Error loading content.</p>';
+        console.error('Error loading posts:', error);
+        container.innerHTML = '<p>No journal entries yet.</p>';
     }
-}
-
-document.addEventListener('DOMContentLoaded', loadJournalEntries);
+});
