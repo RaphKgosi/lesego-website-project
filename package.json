@@ -1,0 +1,12 @@
+{
+  "name": "lesego-website",
+  "version": "1.0.0",
+  "description": "Static website with Decap CMS",
+  "main": "index.js",
+  "scripts": {
+    "build": "node build-posts.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

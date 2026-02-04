@@ -1,11 +1,6 @@
 /**
  * blog-loader.js
- * Fetches JSON content/journal entries and displays them.
- * 
- * NOTE: On a static site without a directory listing API, we need an index of files.
- * This script attempts to fetch 'content/journal/index.json'. 
- * If that fails, it will attempt to simulate fetching assuming a standard naming convention 
- * if you configure it, or you must manually maintain the index.json file.
+ * Fetches the generated js/posts.json index and displays posts.
  */
 
 async function loadJournalEntries() {
@@ -17,37 +12,22 @@ async function loadJournalEntries() {
     }
 
     try {
-        // Attempt to fetch the index file
-        const response = await fetch('content/journal/index.json');
+        // Fetch the generated index
+        const response = await fetch('js/posts.json');
 
         let posts = [];
         if (response.ok) {
-            const indexData = await response.json();
-            // indexData should be an array of filenames: ["2024-02-04-my-post.json", ...]
-
-            // Fetch each post
-            const postPromises = indexData.map(filename =>
-                fetch(`content/journal/${filename}`).then(res => res.json())
-            );
-            posts = await Promise.all(postPromises);
+            posts = await response.json();
         } else {
-            console.warn('content/journal/index.json not found. Ensure you have an index file listing your posts.');
-            // Fallback for demonstration: Try to fetch a sample post if it exists
-            try {
-                const sample = await fetch('content/journal/sample.json').then(res => {
-                    if (res.ok) return res.json();
-                    throw new Error('No sample');
-                });
-                posts = [sample];
-            } catch (e) {
-                // No posts found
-                journalContainer.innerHTML = '<p>No journal entries found.</p>';
-                return;
-            }
+            console.warn('js/posts.json not found. Run "npm run build" to generate it.');
+            journalContainer.innerHTML = '<p>No journal entries found (index missing).</p>';
+            return;
         }
 
-        // Sort posts by date (newest first)
-        posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+        if (posts.length === 0) {
+            journalContainer.innerHTML = '<p>No journal entries found.</p>';
+            return;
+        }
 
         // Render posts
         journalContainer.innerHTML = posts.map(post => `
