@@ -15,111 +15,47 @@ collections:
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     format: "json"
     fields:
-      - { label: "Post Title", name: "title", widget: "string" }
-      - { label: "Publish Date", name: "date", widget: "datetime" }
-      - { label: "Author Name", name: "author", widget: "string", default: "Raph" }
-      - { label: "Featured Image", name: "featured_image", widget: "image" }
-      - { label: "Excerpt / Short Summary", name: "excerpt", widget: "text" }
-      - { label: "Post Body Content", name: "body", widget: "markdown" }
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Date", name: "date", widget: "datetime"}
+      - {label: "Author", name: "author", widget: "string", default: "Raph"}
+      - {label: "Image", name: "featured_image", widget: "image"}
+      - {label: "Excerpt", name: "excerpt", widget: "text"}
+      - {label: "Body", name: "body", widget: "markdown"}
 
   - name: "pages"
     label: "Pages"
+    delete: false
+    format: "json"
     files:
       - file: "content/pages/home.json"
         label: "Home Page"
         name: "home"
         fields:
-          - { label: "Hero - Section Toggle", name: "hero_show", widget: "boolean", default: true }
-          - { label: "Hero - Main Title / Catchphrase", name: "hero_title", widget: "string" }
-          - { label: "Hero - Subtitle Description", name: "hero_subtitle", widget: "text" }
-          - { label: "Hero - Background Image Asset", name: "hero_bg_image", widget: "image" }
-          - { label: "Hero - Decorative Geometric SVG Shape", name: "hero_shape_overlay", widget: "image", required: false }
-          - { label: "Hero - CTA Button Text", name: "hero_cta_text", widget: "string" }
-          - { label: "Hero - CTA Button Destination URL", name: "hero_cta_url", widget: "string" }
+          - {label: "Hero Pre-Title", name: "hero_pre", widget: "string"}
+          - {label: "Hero Main Title", name: "hero_title", widget: "string"}
+          - {label: "Intro Heading", name: "intro_heading", widget: "string"}
+          - {label: "Intro Text", name: "intro_text", widget: "markdown"}
           
-          - { label: "Intro - Section Title", name: "intro_section_title", widget: "string" }
-          - { label: "Intro - Profile Main Image", name: "intro_profile_image", widget: "image" }
-          - { label: "Intro - Main Biography Snippet Text", name: "intro_bio_text", widget: "markdown" }
-          - { label: "Intro - CTA Read More Text", name: "intro_cta_text", widget: "string" }
-          - { label: "Intro - CTA Read More URL", name: "intro_cta_url", widget: "string" }
-          
-          - { label: "Clients - Section Heading", name: "clients_heading", widget: "string" }
-          - label: "Clients - Partner Logo Grid Items"
-            name: "client_logos"
-            widget: "list"
-            summary: "{{fields.client_name}}"
-            fields:
-              - { label: "Client / Company Name", name: "client_name", widget: "string" }
-              - { label: "Logo Image File", name: "client_logo_img", widget: "image" }
-              - { label: "Company Website URL (Optional)", name: "client_url", widget: "string", required: false }
-              
-          - { label: "Testimonials - Section Header Title", name: "testimonials_heading", widget: "string" }
-          - { label: "Testimonials - Section Subheading Description", name: "testimonials_subheading", widget: "text", required: false }
-          - label: "Testimonials - Review Grid Cards"
-            name: "reviews"
-            widget: "list"
-            summary: "{{fields.reviewer_name}} - {{fields.reviewer_company}}"
-            fields:
-              - { label: "Reviewer Name", name: "reviewer_name", widget: "string" }
-              - { label: "Reviewer Job Title / Company Name", name: "reviewer_company", widget: "string" }
-              - { label: "Reviewer Avatar Image Portrait", name: "reviewer_avatar", widget: "image" }
-              - { label: "Quote / Testimonial Text", name: "reviewer_quote", widget: "text" }
-
       - file: "content/pages/about.json"
         label: "About Page"
         name: "about"
         fields:
-          - { label: "Header - Page Banner Title", name: "about_banner_title", widget: "string" }
-          - { label: "Header - Page Banner Subtitle", name: "about_banner_subtitle", widget: "text", required: false }
-          - { label: "Header - Banner Background Image", name: "about_banner_bg", widget: "image", required: false }
+          - {label: "Main Heading", name: "about_heading", widget: "string"}
+          - {label: "Bio Content", name: "bio_content", widget: "markdown"}
+          - {label: "Profile Image", name: "profile_image", widget: "image"}
           
-          - { label: "Bio - Main Heading Title", name: "bio_heading", widget: "string" }
-          - { label: "Bio - Full Story Narrative Content", name: "bio_content", widget: "markdown" }
-          - { label: "Bio - Inline Feature Image Asset", name: "bio_feature_image", widget: "image" }
-          
-          - { label: "Philosophy - Section Title", name: "phil_title", widget: "string" }
-          - label: "Philosophy - Core Values Grid List"
-            name: "core_values"
-            widget: "list"
-            summary: "{{fields.value_title}}"
-            fields:
-              - { label: "Value / Pillar Title", name: "value_title", widget: "string" }
-              - { label: "Value Detailed Description Text", name: "value_desc", widget: "text" }
-              - { label: "Value Custom Icon Graphic (Optional)", name: "value_icon", widget: "image", required: false }
-
       - file: "content/pages/services.json"
         label: "Services Page"
         name: "services"
         fields:
-          - { label: "Header - Title Banner", name: "services_title", widget: "string" }
-          - { label: "Header - Explainer Paragraph Text", name: "services_subtitle", widget: "text" }
+          - {label: "Services Heading", name: "services_heading", widget: "string"}
+          - {label: "Services Introduction", name: "services_intro", widget: "markdown"}
           
-          - label: "Services - Offerings Matrix Blocks"
-            name: "offerings"
-            widget: "list"
-            summary: "{{fields.service_name}}"
-            fields:
-              - { label: "Service Name Title", name: "service_name", widget: "string" }
-              - { label: "Service Focus Summary", name: "service_summary", widget: "text" }
-              - { label: "Service Context Cover Image", name: "service_image", widget: "image" }
-              - { label: "Detailed Scope / Deliverables List", name: "service_bullets", widget: "list", field: { name: "item", widget: "string", label: "Deliverable Item Line" } }
-
       - file: "content/pages/contact.json"
         label: "Contact Page"
         name: "contact"
         fields:
-          - { label: "Intro - Header Title Banner", name: "contact_title", widget: "string" }
-          - { label: "Intro - Explainer Instructions Text", name: "contact_subtitle", widget: "text" }
-          
-          - { label: "Direct Channels - Primary Email Address", name: "direct_email", widget: "string" }
-          - { label: "Direct Channels - Business Telephone Number", name: "direct_phone", widget: "string", required: false }
-          - { label: "Direct Channels - Corporate Headquarters Physical Location Address", name: "direct_address", widget: "text", required: false }
-          
-          - label: "Social Media - Dynamic Links Menu"
-            name: "social_profiles"
-            widget: "list"
-            summary: "{{fields.network_platform_name}}"
-            fields:
-              - { label: "Network Platform Name", name: "network_platform_name", widget: "string" }
-              - { label: "Full Target Hyperlink URL Profile", name: "network_url", widget: "string" }
-              - { label: "Platform Icon Image File Layer (SVG/PNG)", name: "network_icon_layer", widget: "image", required: false }
+          - {label: "Heading", name: "contact_heading", widget: "string"}
+          - {label: "Description", name: "contact_description", widget: "markdown"}
+          - {label: "Email Address", name: "email", widget: "string"}
+          - {label: "Phone Number", name: "phone", widget: "string"}

@@ -1,19 +1,6 @@
 {
-  "hero_show": true,
+  "hero_pre": "Hey, I'm Lesego Makgoba",
   "hero_title": "I cultivate growth <br>\nand strategies that <br>\nget businesses results.",
-  "hero_subtitle": "",
-  "hero_bg_image": "",
-  "hero_shape_overlay": "",
-  "hero_cta_text": "Learn More",
-  "hero_cta_url": "/about",
-  "intro_section_title": "Pioneering Sustainable Agriculture and Growth",
-  "intro_profile_image": "images/lesego-about.png",
-  "intro_bio_text": "I'm Lesego Makgoba, and my journey is rooted in the belief that the best way to predict the future is to create it. With a background in Economics (Honours, UCT), I found that true economic empowerment starts from the ground up.",
-  "intro_cta_text": "Read Full Story",
-  "intro_cta_url": "/about",
-  "clients_heading": "Trusted By",
-  "client_logos": [],
-  "testimonials_heading": "What People Say",
-  "testimonials_subheading": "",
-  "reviews": []
+  "intro_heading": "Pioneering Sustainable Agriculture and Growth",
+  "intro_text": "I'm Lesego Makgoba, and my journey is rooted in the belief that the best way to predict the future is to create it. With a background in Economics (Honours, UCT), I found that true economic empowerment starts from the ground up."
 }
