@@ -28,7 +28,7 @@
 </head>
 
 
-<body id="top">
+<body id="top" data-cms-page="contact">
 
 
     <!-- preloader
@@ -100,9 +100,9 @@
 
                     <div class="row pageintro">
                         <div class="column xl-6 lg-12">
-                            <h2 class="text-display-title">Let's take your business to the next level.</h2>
+                            <h2 class="text-display-title" data-cms-field="contact_heading">Let's take your business to the next level.</h2>
                         </div>
-                        <div class="column xl-6 lg-12 u-flexitem-x-right">
+                        <div class="column xl-6 lg-12 u-flexitem-x-right" data-cms-field="contact_description" data-cms-markdown>
                             <p class="lead">
                             Ready to move beyond the limitations and scale your enterprise with confidence? Use my economic insight and strategic expertise to build a more resilient and profitable venture. Whether you need a full strategic roadmap, guidance on national retail entry, or custom sustainable farming solutions, reach out today. We’ll discuss your goals and lay the foundation for tangible, market-leading growth.
                             </p>
@@ -165,13 +165,13 @@
 
                                     <div class="contact-block">
                                         <h6>Email</h6>
-                                        <a href="mailto:#0">info@lesegomakgoba.com</a>
+                                        <a href="mailto:#0" data-cms-field="email">info@lesegomakgoba.com</a>
                                     </div>
 
                                     <div class="contact-block">
                                         <h6>Phone</h6>
                                         <ul class="contact-list">
-                                            <li><a href="tel:2779-757-4097">+27(0) 79 757 4097</a></li>
+                                            <li><a href="tel:2779-757-4097" data-cms-field="phone">+27(0) 79 757 4097</a></li>
                                         </ul>
                                     </div>
 
@@ -253,6 +253,10 @@
     ================================================== -->
     <script src="js/plugins.js"></script>
     <script src="js/main.js"></script>
+
+    <!-- CMS Hydration Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="js/page-loader.js"></script>
 
 </body>
 </html>

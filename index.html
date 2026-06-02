@@ -29,7 +29,7 @@
 </head>
 
 
-<body id="top">
+<body id="top" data-cms-page="home">
 
 
     <!-- preloader
@@ -98,12 +98,13 @@
                     <div class="column lg-12 s-intro__content-inner grid-block">
 
                         <div class="s-intro__content-text">
-                            <div class="s-intro__content-pretitle text-pretitle">Hey, I'm Lesego Makgoba</div>
-                            <h1 class="s-intro__content-title">
+                            <div class="s-intro__content-pretitle text-pretitle" data-cms-field="hero_pre">Hey, I'm Lesego Makgoba</div>
+                            <h1 class="s-intro__content-title" data-cms-field="hero_title">
                                 I cultivate growth <br>
                                 and strategies that <br>
                                 get businesses results.
                             </h1>
+                            <p class="lead" data-cms-field="hero_subtitle" style="color: rgba(255, 255, 255, 0.7);"></p>
                         </div> <!-- s-intro__content-text -->
 
                         <div class="s-intro__content-media">
@@ -147,12 +148,12 @@
 
                         <div class="section-header grid-section-split__header">
                             <div class="text-pretitle">About Me</div>
-                            <h2 class="text-display-title">
+                            <h2 class="text-display-title" data-cms-field="intro_heading">
                                 Pioneering Sustainable Agriculture and Growth
                             </h2>
                         </div> <!-- end section-header -->
 
-                        <div class="s-about__content-main grid-section-split__primary">
+                        <div class="s-about__content-main grid-section-split__primary" data-cms-field="intro_text" data-cms-markdown>
                             <p class="attention-getter">
                                 I'm Lesego Makgoba, and my journey is rooted in the belief that the best way to predict
                                 the future is to create it. With a background in Economics (Honours, UCT), I found that
@@ -701,7 +702,12 @@
     <script src="js/plugins.js"></script>
     <script src="js/main.js"></script>
 
-    <script>
+    <!-- CMS Hydration Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="js/page-loader.js"></script>
+
+</body>
+<script>
         if (window.netlifyIdentity) {
             window.netlifyIdentity.on("init", user => {
                 if (!user) {

@@ -28,7 +28,7 @@
 </head>
 
 
-<body id="top">
+<body id="top" data-cms-page="services">
 
 
     <!-- preloader
@@ -100,10 +100,10 @@
 
                     <div class="row pageintro">
                         <div class="column xl-6 lg-12">
-                            <h2 class="text-display-title">High-Impact Services To Help Your Business</h2>
+                            <h2 class="text-display-title" data-cms-field="services_heading">High-Impact Services To Help Your Business</h2>
                             <img src="images/strategy.jpg" alt="">
                         </div>
-                        <div class="column xl-6 lg-12 u-flexitem-x-right">
+                        <div class="column xl-6 lg-12 u-flexitem-x-right" data-cms-field="services_intro" data-cms-markdown>
                             <p class="lead">
                             Our services are designed to address the full spectrum of entrepreneurial and business challenges. We provide strategic agri-business consulting to optimize operations, enhance economic performance, and ensure sustainable supply chain resilience. Critically, we also offer expertise in consumer goods development and national market penetration, leveraging the successful model of Nation Rolling Paper. <br><br> Whether you need a strategic roadmap for growth, assistance with distribution channels, or high-value product supply, we bring the analytical insight, financial discipline, and resourcefulness needed to achieve tangible, scalable success.
                             </p>
@@ -338,6 +338,10 @@
     ================================================== -->
     <script src="js/plugins.js"></script>
     <script src="js/main.js"></script>
+
+    <!-- CMS Hydration Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="js/page-loader.js"></script>
 
 </body>
 </html>

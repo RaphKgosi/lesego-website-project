@@ -17,3 +17,43 @@ collections:
       - {label: "Date", name: "date", widget: "datetime"}
       - {label: "Image", name: "image", widget: "image"}
       - {label: "Body", name: "body", widget: "markdown"}
+
+  # --- Add the Pages collection below ---
+  - name: "pages"
+    label: "Pages"
+    delete: false # Prevents accidental deletion of entire configurations
+    format: "json"
+    files:
+      - file: "content/pages/home.json"
+        label: "Home Page"
+        name: "home"
+        fields:
+          - {label: "Hero Pre-Title", name: "hero_pre", widget: "string"}
+          - {label: "Hero Main Title", name: "hero_title", widget: "string"}
+          - {label: "Hero Subtitle", name: "hero_subtitle", widget: "text"}
+          - {label: "Intro Heading", name: "intro_heading", widget: "string"}
+          - {label: "Intro Text", name: "intro_text", widget: "markdown"}
+          
+      - file: "content/pages/about.json"
+        label: "About Page"
+        name: "about"
+        fields:
+          - {label: "Main Heading", name: "about_heading", widget: "string"}
+          - {label: "Bio Content", name: "bio_content", widget: "markdown"}
+          - {label: "Profile Image", name: "profile_image", widget: "image"}
+          
+      - file: "content/pages/services.json"
+        label: "Services Page"
+        name: "services"
+        fields:
+          - {label: "Services Heading", name: "services_heading", widget: "string"}
+          - {label: "Services Introduction", name: "services_intro", widget: "markdown"}
+          
+      - file: "content/pages/contact.json"
+        label: "Contact Page"
+        name: "contact"
+        fields:
+          - {label: "Heading", name: "contact_heading", widget: "string"}
+          - {label: "Description", name: "contact_description", widget: "markdown"}
+          - {label: "Email Address", name: "email", widget: "string"}
+          - {label: "Phone Number", name: "phone", widget: "string"}

@@ -28,7 +28,7 @@
 </head>
 
 
-<body id="top">
+<body id="top" data-cms-page="about">
 
 
     <!-- preloader
@@ -103,7 +103,7 @@
 
                     <div class="row pageintro">
                         <div class="column xl-6 lg-12">
-                            <h2 class="text-display-title">Cultivating the Future: Meet Lesego Makgoba, Visionary and Enterprise Builder</h2>
+                            <h2 class="text-display-title" data-cms-field="about_heading">Cultivating the Future: Meet Lesego Makgoba, Visionary and Enterprise Builder</h2>
                         </div>
                         <div class="column xl-6 lg-12 u-flexitem-x-right">
                             <p class="lead">
@@ -115,13 +115,13 @@
                     <div class="row pagemedia">
                         <d class="column xl-12">
                             <figure class="page-media">                                
-                                <img src="images/lesego-about.png" alt="">
+                                <img src="images/lesego-about.png" alt="" data-cms-field="profile_image">
                             </figure>
                         </d>
                     </div> <!-- end pagemedia -->
 
                     <div class="row width-narrower pagemain">
-                        <div class="column xl-12"> 
+                        <div class="column xl-12" data-cms-field="bio_content" data-cms-markdown> 
 
                             <h2>Lesego The Enterpriser</h2>
                             <p>
@@ -245,6 +245,10 @@
     ================================================== -->
     <script src="js/plugins.js"></script>
     <script src="js/main.js"></script>
+
+    <!-- CMS Hydration Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="js/page-loader.js"></script>
 
 </body>
 </html>
