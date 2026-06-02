@@ -10,6 +10,42 @@
 
 <body>
     <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+    <script>
+      var PagePreview = createClass({
+        render: function() {
+          var entry = this.props.entry;
+          var data = entry.getIn(['data']);
+          if (!data) return h('div', {}, "Loading...");
+          data = data.toJS();
+          var getAsset = this.props.getAsset;
+
+          var elements = [];
+          for (var key in data) {
+            var value = data[key];
+            // Simple check if it's likely an image path
+            if (typeof value === 'string' && value.match(/\.(jpg|jpeg|png|gif|svg)$/i)) {
+                elements.push(h('div', { key: key, style: { marginBottom: '20px' } },
+                    h('strong', {}, key + ': '),
+                    h('br'),
+                    h('img', { src: getAsset(value).toString(), style: { maxWidth: '300px', display: 'block', marginTop: '10px' } })
+                ));
+            } else {
+                elements.push(h('div', { key: key, style: { marginBottom: '20px' } },
+                    h('strong', {}, key + ': '),
+                    h('div', { dangerouslySetInnerHTML: { __html: value }, style: { padding: '10px', background: '#f5f5f5', borderRadius: '4px', marginTop: '5px' } })
+                ));
+            }
+          }
+
+          return h('div', { style: { padding: '30px', fontFamily: 'system-ui, -apple-system, sans-serif' } },
+            h('h1', { style: { borderBottom: '2px solid #333', paddingBottom: '10px' } }, 'Page Preview'),
+            elements
+          );
+        }
+      });
+
+      CMS.registerPreviewTemplate("pages", PagePreview);
+    </script>
 </body>
 
 </html>
