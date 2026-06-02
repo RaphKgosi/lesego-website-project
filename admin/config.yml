@@ -35,27 +35,86 @@ collections:
           - {label: "Hero Main Title", name: "hero_title", widget: "string"}
           - {label: "Intro Heading", name: "intro_heading", widget: "string"}
           - {label: "Intro Text", name: "intro_text", widget: "markdown"}
+          - {label: "Expertise Heading", name: "expertise_heading", widget: "string"}
+          - {label: "Expertise Lead Paragraph", name: "expertise_lead", widget: "text"}
+          - {label: "Expertise Image", name: "expertise_image", widget: "image"}
+          - {label: "Expertise 1 - Title", name: "expertise_1_title", widget: "string"}
+          - {label: "Expertise 1 - Text", name: "expertise_1_text", widget: "text"}
+          - {label: "Expertise 2 - Title", name: "expertise_2_title", widget: "string"}
+          - {label: "Expertise 2 - Text", name: "expertise_2_text", widget: "text"}
+          - {label: "Expertise 3 - Title", name: "expertise_3_title", widget: "string"}
+          - {label: "Expertise 3 - Text", name: "expertise_3_text", widget: "text"}
+          - {label: "Expertise 4 - Title", name: "expertise_4_title", widget: "string"}
+          - {label: "Expertise 4 - Text", name: "expertise_4_text", widget: "text"}
+          - {label: "Expertise 5 - Title", name: "expertise_5_title", widget: "string"}
+          - {label: "Expertise 5 - Text", name: "expertise_5_text", widget: "text"}
+          - {label: "Portfolio Pre-Title", name: "portfolio_pretitle", widget: "string"}
+          - {label: "Portfolio Heading", name: "portfolio_heading", widget: "string"}
+          - {label: "Portfolio Lead Paragraph", name: "portfolio_lead", widget: "text"}
+          - {label: "Process Pre-Title", name: "process_pretitle", widget: "string"}
+          - {label: "Process Heading", name: "process_heading", widget: "string"}
+          - {label: "Process Lead Paragraph", name: "process_lead", widget: "text"}
+          - {label: "Process Image", name: "process_image", widget: "image"}
+          - {label: "Process 1 - Title", name: "process_1_title", widget: "string"}
+          - {label: "Process 1 - Text", name: "process_1_text", widget: "text"}
+          - {label: "Process 2 - Title", name: "process_2_title", widget: "string"}
+          - {label: "Process 2 - Text", name: "process_2_text", widget: "text"}
+          - {label: "Process 3 - Title", name: "process_3_title", widget: "string"}
+          - {label: "Process 3 - Text", name: "process_3_text", widget: "text"}
+          - {label: "Process 4 - Title", name: "process_4_title", widget: "string"}
+          - {label: "Process 4 - Text", name: "process_4_text", widget: "text"}
+          - {label: "Process 5 - Title", name: "process_5_title", widget: "string"}
+          - {label: "Process 5 - Text", name: "process_5_text", widget: "text"}
+          - {label: "Process 6 - Title", name: "process_6_title", widget: "string"}
+          - {label: "Process 6 - Text", name: "process_6_text", widget: "text"}
+          - {label: "CTA Heading", name: "cta_heading", widget: "string"}
+          - {label: "CTA Lead Paragraph", name: "cta_lead", widget: "text"}
           
       - file: "content/pages/about.json"
         label: "About Page"
         name: "about"
         fields:
+          - {label: "Page Pre-Title", name: "about_title_pre", widget: "string"}
+          - {label: "Page Title", name: "about_title", widget: "string"}
           - {label: "Main Heading", name: "about_heading", widget: "string"}
-          - {label: "Bio Content", name: "bio_content", widget: "markdown"}
+          - {label: "Lead Paragraph", name: "about_lead", widget: "text"}
           - {label: "Profile Image", name: "profile_image", widget: "image"}
+          - {label: "Bio Content", name: "bio_content", widget: "markdown"}
+          - {label: "CTA Heading", name: "cta_heading", widget: "string"}
+          - {label: "CTA Lead Paragraph", name: "cta_lead", widget: "text"}
           
       - file: "content/pages/services.json"
         label: "Services Page"
         name: "services"
         fields:
+          - {label: "Page Pre-Title", name: "services_title_pre", widget: "string"}
+          - {label: "Page Title", name: "services_title", widget: "string"}
           - {label: "Services Heading", name: "services_heading", widget: "string"}
+          - {label: "Services Image", name: "services_image", widget: "image"}
           - {label: "Services Introduction", name: "services_intro", widget: "markdown"}
+          - {label: "Service 1 - Title", name: "service_1_title", widget: "string"}
+          - {label: "Service 1 - Text", name: "service_1_text", widget: "text"}
+          - {label: "Service 2 - Title", name: "service_2_title", widget: "string"}
+          - {label: "Service 2 - Text", name: "service_2_text", widget: "text"}
+          - {label: "Service 3 - Title", name: "service_3_title", widget: "string"}
+          - {label: "Service 3 - Text", name: "service_3_text", widget: "text"}
+          - {label: "Service 4 - Title", name: "service_4_title", widget: "string"}
+          - {label: "Service 4 - Text", name: "service_4_text", widget: "text"}
+          - {label: "Service 5 - Title", name: "service_5_title", widget: "string"}
+          - {label: "Service 5 - Text", name: "service_5_text", widget: "text"}
+          - {label: "CTA Heading", name: "cta_heading", widget: "string"}
+          - {label: "CTA Lead Paragraph", name: "cta_lead", widget: "text"}
           
       - file: "content/pages/contact.json"
         label: "Contact Page"
         name: "contact"
         fields:
+          - {label: "Page Pre-Title", name: "contact_title_pre", widget: "string"}
+          - {label: "Page Title", name: "contact_title", widget: "string"}
           - {label: "Heading", name: "contact_heading", widget: "string"}
           - {label: "Description", name: "contact_description", widget: "markdown"}
+          - {label: "Main Image", name: "contact_image", widget: "image"}
+          - {label: "Collaboration Heading", name: "contact_partner_heading", widget: "string"}
+          - {label: "Collaboration Description", name: "contact_partner_text", widget: "text"}
           - {label: "Email Address", name: "email", widget: "string"}
           - {label: "Phone Number", name: "phone", widget: "string"}

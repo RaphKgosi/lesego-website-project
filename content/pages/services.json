@@ -1,4 +1,19 @@
 {
+  "services_title_pre": "My Service Offerings",
+  "services_title": "High-Impact Services",
   "services_heading": "High-Impact Services To Help Your Business",
-  "services_intro": "Our services are designed to address the full spectrum of entrepreneurial and business challenges. We provide strategic agri-business consulting to optimize operations, enhance economic performance, and ensure sustainable supply chain resilience."
+  "services_image": "images/strategy.jpg",
+  "services_intro": "Our services are designed to address the full spectrum of entrepreneurial and business challenges. We provide strategic agri-business consulting to optimize operations, enhance economic performance, and ensure sustainable supply chain resilience. Critically, we also offer expertise in consumer goods development and national market penetration, leveraging the successful model of Nation Rolling Paper. <br><br> Whether you need a strategic roadmap for growth, assistance with distribution channels, or high-value product supply, we bring the analytical insight, financial discipline, and resourcefulness needed to achieve tangible, scalable success.",
+  "service_1_title": "Strategy Consulting",
+  "service_1_text": "We provide customized strategic roadmaps focused on economic viability, sustainable scaling, and successful market entry for new or established ventures. Our approach integrates rigorous analysis with practical, resource-wise solutions for long-term growth.",
+  "service_2_title": "Brand Consulting",
+  "service_2_text": "Guidance on developing resilient consumer brands and executing effective strategies for national retail compliance and distribution. We leverage our expertise in building Nation Rolling Paper to ensure your product achieves market appeal and logistical excellence.",
+  "service_3_title": "Talent Management",
+  "service_3_text": "Focused mentorship and development for emerging entrepreneurs and innovators at all stages. This service instills the financial discipline, resilience, and resourcefulness critical for impactful, long-term business leadership and success.",
+  "service_4_title": "Event Curation",
+  "service_4_text": "Designing and managing impactful, purpose-driven events and workshops centered on key themes like sustainable agriculture, entrepreneurial resilience, and the integration of traditional knowledge systems for community empowerment.",
+  "service_5_title": "Hydroponics Construction",
+  "service_5_text": "We offer custom design and hands-on construction of robust, water-wise hydroponic solutions. Systems are precisely tailored for maximum yield, resource efficiency, and sustainable economic performance across commercial and smaller-scale operations.",
+  "cta_heading": "Let’s make things happen and get started with a consultation today.",
+  "cta_lead": "Ready to implement a sustainable strategy or scale your business? Share the details of your challenge, and let's discuss how my economic insight can translate into tangible value and growth for you."
 }
