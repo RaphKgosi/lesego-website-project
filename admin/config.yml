@@ -102,7 +102,7 @@ collections:
               - { label: "Service Name Title", name: "service_name", widget: "string" }
               - { label: "Service Focus Summary", name: "service_summary", widget: "text" }
               - { label: "Service Context Cover Image", name: "service_image", widget: "image" }
-              - { label: "Detailed Scope / Deliverables List", name: "service_bullets", widget: "list", field: { widget: "string", label: "Deliverable Item Line" } }
+              - { label: "Detailed Scope / Deliverables List", name: "service_bullets", widget: "list", field: { name: "item", widget: "string", label: "Deliverable Item Line" } }
 
       - file: "content/pages/contact.json"
         label: "Contact Page"
